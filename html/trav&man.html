@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="jQuery paper for a course at FMI - WWW technologies 2016/2017">
+    <meta name="author" content="anon">
+
+    <title>jQuery</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Favicon from jQuery official website [www.jquery.com] -->
+	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+	
+    <!-- Custom CSS -->
+    <link href="../css/content.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-target="#myScrollSpy" data-offset="15">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../referat.html">jQuery</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="basics.html">Основи</a>
+                    </li>
+                    <li>
+                        <a href="trav&man.html" id="current">Преминаване и управление</a>
+                    </li>
+                    <li>
+                        <a href="events.html">Събития, делегиране на събития</a>
+                    </li>
+					<li>
+                        <a href="effects.html">Ефекти</a>
+                    </li>
+					<li>
+                        <a href="ajax.html">AJAX</a>
+                    </li>
+					<li>
+                        <a href="resources.html">Използвана литература</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+		
+			<nav class="col-md-3" id="myScrollSpy">
+				<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="6000">
+					<li><a href="#traversal" class="list-group-item">Преминаване</a></li>
+					<li class="subitem"><a href="#filter" class="list-group-item">Филтриране на селекции</a></li>
+					<li><a href="#manipulation" class="list-group-item">Управление</a></li>
+					<li class="subitem"><a href="#change-el" class="list-group-item">Промяна на елементите</a></li>
+					<li class="subitem"><a href="#el-info" class="list-group-item">Вземане на информация от елементи</a></li>
+					<li class="subitem"><a href="#add-el" class="list-group-item">Добавяне на елементи в документа</a></li>
+					<li class="subitem"><a href="#copy-el" class="list-group-item">Копиране на елементи</a></li>
+					<li class="subitem"><a href="#remove-el" class="list-group-item">Премахване на елементи</a></li>
+				</ul>				
+            </nav>
+			
+            <div class="col-md-9">
+			
+				<div class="thumbnail">
+					<p style="margin-top: 2px">
+						jQuery предоставя набор от инструменти за намиране на елементи и работа с тях за постигане на желания резултат. Чрез методите за преминаване и управление
+						могат да се решат задачи лесно и интуитивно, които ще са трудни и "болезнени" да се реализират чрез същинско упрваление на ДОМ. </br></br>
+						В тази глава от реферата ще се разгледа как точно става това, но нека първо да се запознаем с няколко термина чрез следния HTML код:
+					</p>
+					<code>
+						<pre>
+1 | <span class="comment">&ltul></span>
+2 | 	<span class="comment">&ltli></span>
+3 | 		<span class="comment">&ltspan></span>
+4 |     		<span class="comment">&lti></span>Foo<span class="comment">&lt/i></span>
+5 |		<span class="comment">&lt/span></span>
+6 |     <span class="comment">&lt/li></span>
+7 | 	<span class="comment">&ltli></span>Bar<span class="comment">&lt/li></span>
+8 | <span class="comment">&lt/ul></span></pre>
+					</code>
+					<h1>Програмен код 2.1. HTML йерархия</h1>
+					<p>
+						<ul>
+							<li>Първият елемент от списъка е <strong>дете</strong> на неподредения лист.</li>
+							<li>Неподреденият лист е <strong>родител</strong> и на двата елемента.</li>
+							<li>Span-ът е <strong>наследник</strong> на неподредения лист.</li>
+							<li>Неподреденият списък е <strong>предшественик</strong> на всичко в него.</li>
+							<li>Двата елемента на листа са <strong>роднини</strong>.</li>
+						</ul>
+					</p>
+					
+					<div id="traversal">
+						<h2>Преминаване</h2>
+						<p>
+							jQuery позволява преминаване през елементите, които съставят страницата. Първо се прави начална селекция и след това се движим по ДОМ-а, свързан с нея.
+							Движейки се по обектния модел на документа (ДОМ), може да се променя оригиналната селекция; в някои случаи може да се замени първоначалната селекция с новата, в други - махане или добавяне на елементи към нея.
+						</p>
+					</div>
+					<div id="filter">
+						<h3>Филтриране на селекции</h3>
+						<p>
+							Може да се филтрира съществуваща селекция като се добавят само елементи, които отговарят на даден критерий. Това са някои от начините за филтриране:
+						</p>
+						<code>
+							<pre>
+ 1 | <span class="keyword">var</span> listItems = $( <span class="string">'li'</span> );
+ 2 | 
+ 3 | <span class="comment">// филтриране на селекцията до елементи с клас 'special'</span>
+ 4 | <span class="keyword">var</span> special = listItems.filter( <span class="string">'.special'</span> );
+ 5 |    
+ 6 | <span class="comment">// филтриране на селекцията до елементи без клас 'special'</span>
+ 7 | <span class="keyword">var</span> notSpecial = listItems.not( <span class="string">'.special'</span> );
+ 8 |    
+ 9 | <span class="comment">// филтриране на селекцията само до елементи, които съдържат span</span>
+10 | <span class="keyword">var</span> hasSpans = listItems.has( <span class="string">'span'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.2. Филтриране на селекция</h1>
+						<p>
+							Важно е да се забележи, че <code>.not()</code> не е обратното на <code>.is()</code>. Методът <code>.is()</code> връща boolean, докато методът <code>.not()</code> връща нов jQuery обект.
+						</p>
+						<h4>Намиране на елементи, свързани със селекцията</h4>
+						<p>
+							Първоначалната селекция може да служи като начална база за правене на допълнителни селекции. Например, може да има съществуваща селекция, която съдържа само един елемент от списък и тогава може да се работи с
+							неговите роднини или със списъка, който го съдържа. Лесно може да се направи нова селекция, свързана със съществуваща такава:
+						</p>
+						<code>
+							<pre>
+ 1 | <span class="comment">// взима първия елемент от списъка в страницата</span>
+ 2 | <span class="keyword">var</span> listItem = $( <span class="string">'li'</span> ).first();
+ 3 | 
+ 4 | <span class="comment">// взима роднините на елемента от списъка</span>
+ 5 | <span class="keyword">var</span> siblings = listItem.siblings();
+ 6 |    
+ 7 | <span class="comment">// взима следващия роднина на елемента от списъка</span>
+ 8 | <span class="keyword">var</span> nextSibling = listItem.next();
+ 9 |
+10 | <span class="comment">// взима родителя на елемента от списъка</span>
+11 | <span class="keyword">var</span> list = listItem.parent();
+12 |
+13 | <span class="comment">// взима елементите от списъка, които са негови деца</span>
+14 | <span class="keyword">var</span> listItems = list.children();
+15 |
+16 | <span class="comment">// взима всичките елементи от списъка</span>
+17 | <span class="keyword">var</span> allListItems = list.find( <span class="string">'li'</span> );
+18 |
+19 | <span class="comment">// намира всички предшественици на елемента от списъка, които имат клас "module"</span>
+20 | <span class="keyword">var</span> modules = listItem.parents( <span class="string">'.module'</span> );
+21 |    
+22 | <span class="comment">// намира най-близките предшественици на елемента от списъка, които имат клас "module"</span>
+23 | <span class="keyword">var</span> module = listItem.closest( <span class="string">'.module'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.3. Намиране на елементи</h1>
+						<p>
+							Също така може да се добавя към съществуваща селекция чрез метода <code>.add()</code>. Може да се подаде като неин аргумент селектор, масив от елементи, низ от HTML или jQuery обект.
+						</p>
+						<code>
+							<pre>
+ 1 | <span class="keyword">var</span> list = $( <span class="string">'#my-unordered-list'</span> );
+ 2 | 
+ 3 | <span class="comment">// използване списъка и след това...</span>
+ 4 | 
+ 5 | <span class="keyword">var</span> listAndListItems = list.add( <span class="string">'#my-unordered-list li'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.4. Работа със селекция</h1>
+					</div>
+					
+					<div id="manipulation">
+						<h2>Управление</h2>
+						<p>
+							Методите за управление на jQuery позволяват да се променя ДОМ на страницата чрез много по-приятен синтаксис от този, осигурен от DOM. Тези методи връщат jQuery обекта, върху който са извикани, което означава, че те 
+							могат да бъдат закачани или комбинирани с други методи.
+						</p>
+					</div>
+					
+					<div id="change-el">
+						<h3>Промяна на елементите</h3>
+						<p>
+							Има безброй начини за промяна на елементите чрез jQuery. Ще бъдат разгледани най-използваните.
+						</p>
+						<h4>Добавяне и премахване на класове</h4>
+						<p>
+							Атрибутът "class" може да бъде използван за добавяне на CSS правила, но също така може да бъде полезен и при работа с jQuery селекции. Например, елемент може да има клас <code>hidden</code> със съответстващото CSS правило,
+							което прави "display" на тези елементи "none". Използвайки jQuery, може да се добавят или премахват класове, за да се афектира показването на елементите.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).addClass( <span class="string">'hidden'</span> );
+2 | $( <span class="string">'li'</span> ).eq( 1 ).removeClass( <span class="string">'hidden'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.5. Добавяне и премахване на клас</h1>
+						<p>
+							Ако в някой случай се налага добавяне и премахване на клас често, jQuery помага с метода <code>.toggleClass()</code>. Следният код добавя клас <code>hidden</code>, ако не съществува, или го премахава, ако съществува:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).eq( 1 ).toggleClass( <span class="string">'hidden'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.6. Добавяне и премахване на клас 2</h1>
+						<h4>Смяна на стилове</h4>
+						<p>
+							Когато не може да се достигне желаната цел чрез добавяне или премахване на класове, може да се използва метода на jQuery <code>.css()</code>, който позволява да се сменя стила на елемента директно. Това обикновено е нужно, когато се изисква
+							да се настройват числени стойности, които могат да бъдат изчислени само в по време на работа.</br></br>
+							Например, в случай когато трябва да се стилизира елемент, базирано на ширината на неговия родител; може да е трудно или невъзможно да се знае ширина на родителския елемент предварително при гъвкаво оформление. В този случай може да се прибегне
+							до използване на метода <code>.css()</code> за стилизиране.
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> list = $( <span class="string">'#my-unordered-list'</span> );
+2 | <span class="keyword">var</span> width = Math.floor( list.width() * 0.1 );
+3 | 
+4 | list.find(<span class="string">'li'</span>).each(<span class="keyword">function</span>( index, elem ) {
+5 |   	<span class="keyword">var</span> padding = width * index;
+6 |   	$( elem ).css( <span class="string">'padding-left'</span>, padding + <span class="string">'px'</span> );
+7 | });</pre>
+						</code>
+						<h1>Програмен код 2.7. Смяна на css свойство</h1>
+						<p>
+							Ако трябва да се настройват много свойства наведнъж, може да се подаде обект като аргумент на метода <code>.css()</code>, вместо име на свойство и стойност.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).eq( 1 ).css({
+2 |   	<span class="string">'font-size'</span>: <span class="string">'20px'</span>,
+3 |   	<span class="string">'padding-left'</span>: <span class="string">'20px'</span>
+4 | });</pre>
+						</code>
+						<h1>Програмен код 2.8. Смяна на няколко css свойствa</h1>
+						<h4>Смяна на атрибути</h4>
+						<p>
+							Може да се използва метода <code>.attr()</code> за промяна на други атрибути на елементи. Например, може да се ползва, за да се сложи ново заглавие на линк:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'a'</span> ).attr( <span class="string">'title'</span>, <span class="string">'Click me!'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.9. Смяна на заглавие на линк</h1>
+						<p>
+							Когато се променя стойност на даден атрибут, може да се подаде функция като втори аргумент. Тази функция трябва да върне новата стойност на атрибута.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'a'</span> ).attr( <span class="string">'href'</span>, <span class="keyword">function</span>(index, value) {
+2 |   <span class="keyword">return</span> value + <span class="string">'?special=true'</span>;
+3 | });</pre>
+						</code>
+						<h1>Програмен код 2.10. Пример за функция, която връща новата стойност на атрибут</h1>
+						<p>
+							Също така атрибути могат да се премахват изцяло чрез <code>.removeAttr()</code>.
+						</p>
+					</div>
+					
+					<div id="el-info">
+						<h3>Вземане на информация от елементи</h3>
+						<p>
+							Всички методи, които могат да бъдат използвани за промяна на елементи, също така могат да бъдат изпозлвани и за взезмане на информация от тях.
+							Например методът <code>.val()</code> може да бъде използван и за сетър и за гетър.
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> input = $( <span class="string">'input[type="text"]'</span> );
+2 | input.val( <span class="string">'new value'</span> );
+3 | input.val(); <span class="comment">// връща 'new value'</span></pre>
+						</code>
+						<h1>Програмен код 2.11. .val() - сетър и гетър</h1>
+						<p>
+							По същия начин, методът <code>.css()</code> може да се използва за извличане на стойността на отделните CSS свойства като се предава само име на свойство, а не стойност.
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> listItemColor = $( <span class="string">'li'</span> ).css( <span class="string">'color'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.12. .css() - гетър</h1>
+					</div>
+					
+					<div id="add-el">
+					<h3>Добавяне на елементи в документа</h3>
+						<p>
+							Независимо дали е избран елемент или е създаден такъв, може да се вземе дадена селекция и да се добави в документ. Има два главни метода да се направи това:
+							чрез извикване на метода върху елемента, който ще се поставя или чрез извикване на метод върху елемента, по отношение на който ще се поставя. </br></br>
+							Например, може да има случай, в който се изисква преместване на първия елемент от списък на последно място. Има няколко начина да се направи това. </br></br>
+							Може да се прикачи елемента към списъка чрез метода <code>.appеndTo()</code> на елемента:
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> listItem = $( <span class="string">'#my-unordered-list li'</span> ).first();
+2 | listItem.appendTo( <span class="string">'#my-unordered-list'</span> );</pre>
+						</code>
+						<h1>Програмен код 2.13. Пример за използване на метода .appеndTo()</h1>
+						<p>
+							Може да се прикачи елемента към списъка чрез метода <code>.appеnd()</code> на списъка:
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> listItem = $( <span class="string">'#my-unordered-list li'</span> ).first();
+2 | $( <span class="string">'#my-unordered-list'</span> ).append( listItem );</pre>
+						</code>
+						<h1>Програмен код 2.14. Пример за използване на метода .appеnd()</h1>
+						<p>
+							Може да се добави елемента след последния като се извика метода <code>.insertAfter()</code> на елемента, който ще се премества:
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> listItems = $( <span class="string">'#my-unordered-list li'</span> );
+2 | listItems.first().insertAfter( listItems.last() );</pre>
+						</code>
+						<h1>Програмен код 2.15. Пример за използване на метода .insertAfter()</h1>
+						<p>
+							Може и да се извика метода <code>.after()</code> на последния елемент от списъка:
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> listItems = $( <span class="string">'#my-unordered-list li'</span> );
+2 | listItems.last().after( listItems.first() );</pre>
+						</code>
+						<h1>Програмен код 2.16. Пример за използване на метода .after()</h1>
+						<p>
+							Има много начини за разместване на елементи - могат да се поставят около, вътре, извън други елементи... в зависимост от ситуацията.
+						</p>
+					</div>
+					
+					<div id="copy-el">
+						<h3>Копиране на елементи</h3>
+						<p>
+							Може да се направи копие на елемент или на множество от елементи с jQuery като се използва метода <code>.clone()</code>. Това ще направи
+							копие на елементите, но то ще бъде само в паметта - трябва да се постави ръчно в документа. Могат да се управляват копирани елементи преди да бъдат
+							поставени в документа.
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> clones = $( <span class="string">'li'</span> ).clone();
+2 | 
+3 | clones.html(<span class="keyword">function</span>( index, oldHtml ) {
+4 |   	<span class="keyword">return</span> oldHtml + <span class="string">'!!!'</span>;
+5 | });
+6 | 
+7 | $( <span class="string">'#my-unordered-list'</span> ).append( clones );</pre>
+						</code>
+						<h1>Програмен код 2.17. Копиране на елементи</h1>
+					</div>
+					
+					<div id="remove-el">
+						<h3>Премахване на елементи</h3>
+						<p>
+							Има три начина за премахване на елементи от документа: <code>.remove()</code>, <code>.detach()</code> и <code>.replaceWith()</code> като всеки от тях има определена цел. </br></br>
+							Методът <code>.remove()</code> трябва да бъде използван за постоянно премахване на елементи, тъй като той маха и връзката с всички манипулатори на събития, свързани с него. Този метод
+							връща референция към изтритите елементи, но ако се добавят отново, те вече няма да имат събития, вързани към тях.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'#my-unordered-list li'</span> ).click(<span class="keyword">function</span>() {
+2 |  	 alert( $( this ).text() );
+3 | });
+4 | 
+5 | <span class="keyword">var</span> removedListItem = $( <span class="string">'#my-unordered-list li'</span> ).first().remove();
+6 | 
+7 | removedListItem.appendTo( <span class="string">'#my-unordered-list'</span> );
+8 | removedListItem.trigger( <span class="string">'click'</span> ); <span class="comment">// no alert!</span></pre>
+						</code>
+						<h1>Програмен код 2.18. Премахване на елементи чрез метода .remove()</h1>
+						<p>
+							Методът <code>.detach()</code> е полезен за временно премахване на елементи от документа. Например, ако трябва да се правят много промени в структурата на документа чрез jQuery, ще бъде
+							по-ефикасно да се полазва <code>.detach()</code> за изтриване на афектираните елементи, промяната им и след това повторното им добавяне, използвайки някой от методите за добавяне.
+							Елементи, премахнати с този метод ще запазят връзката си с техните събития.
+						</p>
+						<code>
+							<pre>
+ 1 | $( <span class="string">'#my-unordered-list li'</span> ).click(<span class="keyword">function</span>() {
+ 2 |   	alert( $( this ).text() );
+ 3 | });
+ 4 | 
+ 5 | <span class="keyword">var</span> detachedListItem = $( <span class="string">'#my-unordered-list li'</span> ).first().detach();
+ 6 | 
+ 7 | <span class="comment">// прави нещо сложно с елемента от списъка</span>
+ 8 | 
+ 9 | detachedListItem.appendTo( <span class="string">'#my-unordered-list'</span> );
+10 | detachedListItem.trigger( <span class="string">'click'</span> ); <span class="comment">// alert!</span></pre>
+						</code>
+						<h1>Програмен код 2.19. Премахване на елементи чрез метода .detach()</h1>
+						<p>
+							Третият метод <code>.replaceWith()</code> разменя елемент или елементи с други или HTML, подадени като аргумент. Заменените елементи са върнати, но също както при <code>.remove()</code> се губят връзките със събитията.
+						</p>
+						<code>
+							<pre>
+ 1 | $( <span class="string">'#my-unordered-list li'</span> ).click(<span class="keyword">function</span>() {
+ 2 |    alert( $( this ).text() );
+ 3 | });
+ 4 | 
+ 5 | <span class="keyword">var</span> replacedListItem = $( <span class="string">'#my-unordered-list li'</span> ).first()
+ 6 |   .replaceWith( <span class="string">'&ltli>new!&lt/li>'</span> );
+ 7 | 
+ 8 | replacedListItem.appendTo( <span class="string">'#my-unordered-list'</span> );
+ 9 | 
+10 | replacedListItem.trigger( <span class="string">'click'</span> ); <span class="comment">// no alert!</span></pre>
+						</code>
+						<h1>Програмен код 2.20. Премахване на елементи чрез метода .replaceWith()</h1>
+					</div>
+				</div>
+				
+				<!-- Pager -->
+				<ul class="pager">
+					<li><a href="basics.html"><- Назад</a></li>
+					<li><a href="events.html">Напред -></a></li>
+				</ul>
+				<!-- /.pager -->
+				
+			</div>
+
+		</div>
+		
+	</div>
+    <!-- /.container -->
+
+    <div>
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <p>Copyright &copy; 2017</p>
+        </footer>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+
+	<!-- ScrollSpy -->
+    <script src="../js/scrollSpy.js"></script>
+	
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="jQuery paper for a course at FMI - WWW technologies 2016/2017">
+    <meta name="author" content="anon">
+
+    <title>jQuery</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Favicon from jQuery official website [www.jquery.com] -->
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+	
+    <!-- Custom CSS -->
+    <link href="css/content.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-target="#myScrollSpy" data-offset="15">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" id="current" href="referat.html">jQuery</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="html/basics.html">Основи</a>
+                    </li>
+                    <li>
+                        <a href="html/trav&man.html">Преминаване и управление</a>
+                    </li>
+                    <li>
+                        <a href="html/events.html">Събития, делегиране на събития</a>
+                    </li>
+					<li>
+                        <a href="html/effects.html">Ефекти</a>
+                    </li>
+					<li>
+                        <a href="html/ajax.html">AJAX</a>
+                    </li>
+					<li>
+                        <a href="html/resources.html">Използвана литература</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+		
+			<nav class="col-md-3" id="myScrollSpy">
+				<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="1000">
+					<li><a href="#brief-look" class="list-group-item">Бърз преглед</a></li>
+					<li class="subitem"><a href="#dom" class="list-group-item">Управление на ДОМ</a></li>
+					<li class="subitem"><a href="#events" class="list-group-item">Обработка на събития</a></li>
+					<li class="subitem"><a href="#ajax" class="list-group-item">Ajax</a></li>
+				</ul>				
+            </nav>
+			
+            <div class="col-md-9">
+			
+				<div class="thumbnail">
+					
+					<a target="_blank" href="https://jquery.com/"><img src="img/jQuery_logo.png" alt="jQuery official logo" /></a></br></br></br>
+					<p>
+						jQuery е бърза библиотека на JavaScript с много функционалности. Тя прави управлението на HTML документи, 
+						обработката на събития, анимирането и AJAX много по-лесно, използвайки програмен интерфейс, който работи в по-голямата част от съвременните браузъри.
+						Със своята гъвкавост и разшируемост, jQuery променя начина на писане на JavaScript на милиони хора, улеснявайки тяхната работа.
+					</p>
+					<div id="brief-look">
+						<h3>Бърз преглед</h3>
+					</div>
+						<div id="dom">
+							<h4>Управление на ДОМ</h4>
+							<p>
+							Вземане на елемента <code>&ltbutton></code> с клас "continue" и смяна на HTML кода с "Next...".
+							</p>
+							<code>			
+								<pre>
+1 | $( <span class="string">"button.continue"</span> ).html( <span class="string">"Next..."</span> )</pre>
+							</code>
+							<h1>Програмен код 0.1. Вземане на елемент</h1>
+						</div>
+					
+						<div id="events">
+							<h4>Обработка на събития</h4>
+							<p>
+								Показване на елемента <code>#banner</code>, който е скрит с display:none в неговия CSS, когато е кликнат бутона <code>#button-container</code>. 
+							</p>
+							<code>
+								<pre>
+1 | <span class="keyword">var</span> hiddenBox = $( <span class="string">"#banner"</span> );
+2 | $( <span class="string">"#button-container button"</span> ).on( <span class="string">"click"</span>, <span class="keyword">function</span>( event ) {
+3 | 	hiddenBox.show();
+4 | });							</pre>
+							</code>
+							<h1>Програмен код 0.2. Обработка на събитие</h1>
+						</div>
+						
+						<div id="ajax">
+							<h4>Ajax</h4>
+							<p>
+								Извикване на локален скрипт на сървъра <code>/api/getWeather</code> с query параметър <code>zipcode=2300</code> и смяна на HTML кода на елемента
+								<code>#weather-temp</code> с върнатия текст.
+							</p>
+							<code>
+								<pre>
+1 | $.ajax({
+2 |		url: <span class="string">"/api/getWeather"</span>,
+3 |		data: {
+4 |			zipcode: 2300
+5 |		},
+6 |		success: <span class="keyword">function</span>( result ) {
+7 |			$( <span class="string">"#weather-temp"</span> ).html( <span class="string">"&ltstrong>"</span> + result + <span class="string">"&lt/strong> degrees"</span> );
+8 |		}
+9 | });							</pre>
+							</code>
+							<h1>Програмен код 0.3. ajax заявка</h1>
+							<p>
+								Фунционалностите на тази удобна и полезна библиотека са описани по-подробно в следващите страници на реферата... </br></br>
+								Приятно четене!
+							</p>
+						</div>
+					
+				</div>
+				
+				<!-- Pager -->
+				<ul class="pager">
+					<li><a href="html/basics.html">Напред -></a></li>
+				</ul>
+				<!-- /.pager -->
+				
+			</div>
+
+		</div>
+		
+	</div>
+    <!-- /.container -->
+
+    <div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <p>Copyright &copy; 2017</p>
+        </footer>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+	
+	<!-- ScrollSpy -->
+    <script src="js/scrollSpy.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

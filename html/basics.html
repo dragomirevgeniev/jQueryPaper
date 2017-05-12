@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="jQuery paper for a course at FMI - WWW technologies 2016/2017">
+    <meta name="author" content="anon">
+
+    <title>jQuery</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Favicon from jQuery official website [www.jquery.com] -->
+	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+	
+    <!-- Custom CSS -->
+    <link href="../css/content.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-target="#myScrollSpy" data-offset="15">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../referat.html">jQuery</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="basics.html" id="current">Основи</a>
+                    </li>
+                    <li>
+                        <a href="trav&man.html">Преминаване и управление</a>
+                    </li>
+                    <li>
+                        <a href="events.html">Събития, делегиране на събития</a>
+                    </li>
+					<li>
+                        <a href="effects.html">Ефекти</a>
+                    </li>
+					<li>
+                        <a href="ajax.html">AJAX</a>
+                    </li>
+					<li>
+                        <a href="resources.html">Използвана литература</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+		
+			<nav class="col-md-3" id="myScrollSpy">
+				<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="5000">
+					<li><a href="#what-is-dollar" class="list-group-item">Какво е $ и как се използва?</a></li>
+					<li><a href="#doc-ready" class="list-group-item">Зареждане на DOM</a></li>
+					<li><a href="#get-el" class="list-group-item">Селектиране на някои елементи</a></li>
+					<li><a href="#create-el" class="list-group-item">Създаване на нови елементи</a></li>
+					<li><a href="#work-with-el" class="list-group-item">Работа със селекции</a></li>
+				</ul>				
+            </nav>
+			
+            <div class="col-md-9">
+			
+				<div class="thumbnail">
+					<p style="margin-top: 2px">
+						Библиотеката jQuery прави управлението на HTML страница по-лесно след като е показана в браузър.
+						Тя предлага инструменти, които подпомагат начина, по който потребителя взаимодейства със нея, както и
+						инструменти, които позволяват комуникация със сървъра без тя да бъде презареждана. </br></br>
+						В следващите редове са описани основите на използването на библиотеката jQuery или по-точно нейните главни
+						функционалности - селектиране на елементи и работа с тях.
+					</p>
+					<div id="what-is-dollar">
+						<h3>Какво е $ и как се използва?</h3>
+						<p>
+							Библиотеката jQuery позволява достъпване на елементи чрез използване на CSS селектори. Това става с функцията <code>jQuery</code>.
+						</p>
+						<code>			
+							<pre>
+1 | <span class="keyword">var</span> listItems = jQuery( <span class="string">'li'</span> );</pre>
+						</code>
+						<h1>Програмен код 1.1. Функцията jQuery</h1>
+						<p>
+							Има и по-кратък запис, който се използва по-често:
+						</p>
+						<code>			
+							<pre>
+1 | <span class="keyword">var</span> listItems = $( <span class="string">'li'</span> );</pre>
+						</code>
+						<h1>Програмен код 1.2. Функцията jQuery - кратък запис</h1>
+						<p>
+							Знакът за долар <code>$</code> е по-кратък и по-удобен начин за изписване на функцията <code>jQuery</code>.
+							В JavaScript валидни имена са всички, които не започват с цифра и не съдържат тире. В "source" кода на библиотеката
+							може се открие следния ред: 
+						</p>
+						<code>
+							<pre>
+1 | <span class="comment">// показване на jQuery на главния обект</span>
+2 | window.jQuery = window.$ = jQuery;</pre>
+						</code>
+						<h1>Програмен код 1.3. jQuery "source" код</h1>
+						<p>
+							Когато се извика функцията <code>$()</code> и се подаде селектор като неин параметър, се създава нов jQuery обект.
+							Разбира се, в JavaScript функциите също са обекти, което означава, че <code>$()</code> (и <code>jQuery</code>) има
+							свойства и методи. Например, може да се извика свойството <code>$.support</code> за достъпване на информация за текущия браузър,
+							а чрез метода <code>$.ajax</code> може да се направи AJAX заявка.
+						</p>
+					</div>
+
+					<div id="doc-ready">		
+						<h3>Зареждане на DOM</h3>
+						<p>
+							Преди да може да се използва безопасно jQuery трябва да се уверим, че страницата е в състояние да бъде управлявана.
+							С jQuery това става като се постави кода в функция, която се подава като аргумент на функцията <code>$(document).ready()</code>.
+							В долния пример фукнцията, която се подава е анонимна.
+						</p>
+						<code>
+							<pre>
+1 | $( document ).ready(<span class="keyword">function</span>() {
+2 |  	console.log( <span class="string">'ready!'</span> );
+3 | });						</pre>
+						</code>
+						<h1>Програмен код 1.4. Функцията $(document).ready()</h1>
+						<p>
+							Така функцията, която се подава ще се изпълни, когато е готов документа. Какво се случва всъщност?
+							Използва се <code>$(document)</code>, за да се създаде jQuery обект от документа на страницата и след това се извиква
+							функцията <code>.ready()</code> на този обект като и се подава функцията, която трябва да бъде изпълнена. </br></br>
+							Тъй като това се използва често, има и по-кратък начин за записване. <code>$()</code> има и друго задължение - като
+							псевдоним на <code>$(document).ready()</code>, ако и се подаде функция:
+						</p>
+						<code>
+							<pre>
+1 | $(<span class="keyword">function</span>() {
+2 |  	console.log( <span class="string">'ready!'</span> );
+3 | });							</pre>
+						</code>
+						<h1>Програмен код 1.5. Функцията $(document).ready() - кратък запис</h1>
+					</div>
+					
+					<div id="get-el">
+						<h3>Селектиране на някои елементи</h3>
+						<p>
+							Най-лесното нещо, което може да се прави с jQuery е селектиране на елементи и работа с тях. Това става лесно като се подаде подходящия CSS селектор на функцията <code>$()</code>.
+						</p>	
+						<code>
+							<pre>
+1 | $( <span class="string">'#header'</span> ); <span class="comment">// селектиране на елемент с ИН 'header'</span>
+2 | $( <span class="string">'li'</span> );      <span class="comment">     // селектиране на всички "li" елементи в страницата</span>
+3 | $( <span class="string">'ul li'</span> );   <span class="comment">    // селектиране на всички "li" елементи, които са в неподредени списъци</span>
+4 | $( <span class="string">'.person'</span> ); <span class="comment">// селектиране на всички елементи с клас "person"</span></pre>
+						</code>
+						<h1>Програмен код 1.6. Селектиране на елементи</h1>
+						<p>
+							Важно е да се разбере, че всичките селекции, които се правят са за текущи елементи. Ако се напише <code>var anchors = $( 'a' );</code> и след това се добави нов елемент <code>&lta></code> 
+							в страницата, променливата <code>anchors</code> няма да го съдържа.
+						</p>
+						<h4>Други начини за създаване на jQuery обект</h4>
+						<p>
+							Като допълнение на подаването на прост селектор на функцията <code>$()</code>, ето още начини за създаване на jQuery обекти:
+						</p>
+						<code>
+							<pre>
+ 1 | <span class="comment">// създаване на jQuery обект от ДОМ елемент</span>
+ 2 | $( document.body.children[0] );
+ 3 | 
+ 4 | <span class="comment">// създаване на jQuery обект от лист от ДОМ елементи</span>
+ 5 | $( [ window, document ] );
+ 6 | 
+ 7 | <span class="comment">// създаване на селекция в контекста на ДОМ елемента</span>
+ 8 | <span class="keyword">var</span> firstBodyChild = document.body.children[0];
+ 9 | $( <span class="string">'li'</span>, firstBodyChild );
+10 | 
+11 | <span class="comment">// създаване на селекция в рамките на предишна такава</span>
+12 | <span class="keyword">var</span> paragraph = $( <span class="string">'p'</span> );
+13 | $( <span class="string">'a'</span>, paragraph );</pre>
+						</code>
+						<h1>Програмен код 1.7. Други начини за създаване на jQuery обект</h1>
+						<h4>Вземане на единични елементи от селекция</h4>
+						<p>
+							За работа с единичен елемент, трябва да се достъпи елемента от jQuery обекта. Например, ако се иска директен достъп до свойсвтото <code>value</code> на елемента <code>&ltinput></code>,
+							трябва да се работи с същинския DOM елемент.
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> listItems = $( <span class="string">'li'</span> );
+2 | <span class="keyword">var</span> rawListItem = listItems[0]; <span class="comment">// или listItems.get( 0 )</span>
+3 | <span class="keyword">var</span> html = rawListItem.innerHTML;</pre>
+						</code>
+						<h1>Програмен код 1.8. Вземане на единични елементи от селекция</h1>
+					</div>
+					
+					<div id="create-el">
+						<h3>Създаване на нови елементи</h3>
+						<p>
+							Функцията <code>$</code> има една последна роля: създаване на нови елементи. Ако се подаде HTML отрязък в <code>$()</code>, тя ще създаде нов елемент в паметта - елементът
+							ще бъде създаден, но няма да бъде добавен в страницата все още.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'&ltp>'</span> ); <span class="comment">// създаване на нов &ltp> елемент без съдържание</span>
+2 | $( <span class="string">'&ltp>Hello!&lt/p>'</span> ); <span class="comment">// създаване на нов &ltp> елемент със съдържание</span>
+3 | $( <span class="string">'&ltp class="greet">Hello!&lt/p>'</span> ); <span class="comment">// създаване на нов &ltp> с съдържание и клас</span></pre>
+						</code>
+						<h1>Програмен код 1.9. Създаване на нови елементи</h1>
+						<p>
+							Също така може да се създаде елемент като се подаде обект с информация за създаването му:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'&ltp>'</span>, {
+2 | 	html: <span class="string">'Hello!'</span>,
+3 | 	<span class="string">'class'</span>: <span class="string">'greet'</span>
+4 | });</pre>
+						</code>
+						<h1>Програмен код 1.10. Създаване на нови елементи чрез подаден обект</h1>
+						<p>
+							Забележете, че трябва да се огради свойството <code>class</code> в кавички, тъй като това е ключова дума в JavaScript. Ако не се направи, това ще доведе до грешки в някои браузъри.
+						</p>
+					</div>
+					
+					<div id="work-with-el">
+						<h3>Работа със селекции</h3>
+						<p>
+							Веднъж щом е създаден jQuery обект, който съдържа дадена селекция, най-вероятно ще се наложи да се работи с нея. Преди да се направи това обаче, трябва да се запознаем с едни от основните концепции за работа с jQuery.
+						</p>
+						<h4>Тестване на селекция</h4>
+						<p>
+							Може да се определи дали селекция покрива даден критерий чрез метода <code>.is()</code>. Най-често срещаният начин за използване на този метод е като се подаде селектор като единичен аргумент. Връща се <code>true</code> или <code>false</code>
+							в зависимост от това дали селекцията съответства на селектора:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).eq( 0 ).is( <span class="string">'.special'</span> ); <span class="comment">// false</span>
+2 | $( <span class="string">'li'</span> ).eq( 1 ).is( <span class="string">'.special'</span> ); <span class="comment">// true</span></pre>
+						</code>
+						<h1>Програмен код 1.11. Тестване на селекция</h1>
+						<p>
+							Също така метода <code>.is()</code> може да се подаде jQuery обект, същински ДОМ елемент, или дори фукнция, ако трябва да се направи по-сложен тест.
+						</p>
+						<h4>Гетъри, сетъри и неявна итерация</h4>
+						<p>
+							Има много методи, които могат да бъдат извикани след като е направнеа селекция. Те най-общо попадат в две категории: гетъри и сетъри. Гетърите взимат парче информация от селекцията, а сетърите я променят по някакъв начин.
+							В почти всички случаи гетърите работят само върху първия елемент в селекцията; сетърите работят с всички елементи в селекцията, изпозлвайки така наречената неявна итерация. </br> </br>
+							Неявната итерация означава, че jQuery автоматично итерира през всички елементи в дадена селекция, когато се извика сетър върху нея. Това означава, че когато се иска да се направи нещо с всичките елементи,
+							не трябва да се да се извиква сетъра на всеки елемент от селекцията поотделно, а направо да се извика сетъра на селекцията и jQuery ще итерира през елементите. </br> </br>
+							Да кажем, че се изисква смяна на HTML-a на всички "li" елементи на дадена страница. За да се направи това се използва метода <code>.html()</code>, който
+							сменя HTML-a на всички избрани елементи.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).html( <span class="string">'New HTML'</span> );</pre>
+						</code>
+						<h1>Програмен код 1.12. Промяна на HTML код на списъкови елементи</h1>
+						<p>
+							Също така може да се подаде функция на сетър методите на jQuery. Върнатата стойност на тази функция се използва за новата стойност и тя получва два аргумента: индекса на елемента в селекцията и старата стойност на нещото, което ще се променя.
+							Това е полезно, когато трябва да се достъпи информация за текущото състояние на елемента, за да се постави новото състояние правилно.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).html(<span class="keyword">function</span>( index, oldHtml ) {
+2 | 	<span class="keyword">return</span> oldHtml + <span class="string">'!!!'</span>
+3 | });</pre>
+						</code>
+						<h1>Програмен код 1.13. Промяна на HTML код на списъкови елементи с подаване на функция като аргумент</h1>
+						<h4>Явна итерация</h4>
+						<p>
+							Понякога задачата, която трябва да се изпълни не пасва напълно в някои от съществуващите методи в jQuery и трябва да се итерира явно през селекцията. Методът <code>.each()</code> позволява точно това. В долното парче код се използва, за да се добави таг <code>&ltb></code> 
+							в началото на "li" елемента, отговарящ на съответния индекс.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).each(<span class="keyword">function</span>( index, elem ) {
+2 | 	<span class="comment">// this: текущият ДОМ елемент</span>
+3 | 	<span class="comment">// index: текущият индекс на елемента в селекцията</span>
+4 |     <span class="comment">// elem: текущият ДОМ елемент (същия като this)</span>
+5 |     $( elem ).prepend( <span class="strinссссьсьg">'&ltb>'</span> + index + <span class="string">': &lt/b>'</span> );
+6 | });</pre>
+						</code>
+						<h1>Програмен код 1.14. Явна итерация</h1>
+						<h4>"Chaining" - връзване на методи</h4>
+						<p>
+							Една от най-полезните фунцкионалности на jQuery е способноста да се "връзват" методи заедно. Това означва, че може да се извиква поредица от методи върху дадена селекция без да трябва да се 
+							повтаря селекцията или тя да се запазва в променлива. Може дори да се направят нови селекции, базирани на предишни такива без да се прекъсва веригата.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> )
+2 | 	.click(<span class="keyword">function</span>() {
+3 | 		$( this ).addClass( <span class="string">'clicked'</span> );
+4 |     })
+5 |     .find( <span class="string">'span'</span> )
+6 | 		.attr( <span class="string">'title'</span>, <span class="string">'Hover over me'</span> );</pre>
+						</code>
+						<h1>Програмен код 1.15. Chaining</h1>
+						<p>
+							Връзването е възможно, защото всеки сетър метод в jQuery връща селекцията, върху която е извикан. Тази функционалност е доста добра и много други библиотеки са я "наследили" от jQuery.
+							Въпреки това, тя трябва да се ползва с мярка, защото прекомерната употреба може да направи кода много труден за четене, модифициране и дебъгване. Няма точна мярка за дължината на веригата, но дори и простичкият код по-горе заслужава малко рефакторинг за по-лесно разбиране.
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> listItems = $( <span class="string">'li'</span> );
+2 | <span class="keyword">var</span> spans = listItems.find( <span class="string">'span'</span> );
+3 | 
+4 | listItems
+5 |    .click(<span class="keyword">function</span>() {
+6 | 		$( this ).addClass( <span class="string">'clicked'</span> );
+7 | 	});
+8 | 
+9 | spans.attr( <span class="string">'title'</span>, <span class="string">'Hover over me'</span> );</pre>
+						</code>
+						<h1>Програмен код 1.16. Chaining - след рефакторинг</h1>
+					</div> 
+					
+				</div>
+				
+					<!-- Pager -->
+					<ul class="pager">
+						<li><a href="../referat.html"><- Назад</a></li>
+						<li><a href="trav&man.html">Напред -></a></li>
+					</ul>
+					<!-- /.pager -->
+				
+			</div>
+
+		</div>
+		
+	</div>	
+    <!-- /.container -->
+
+    <div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <p>Copyright &copy; 2017</p>
+        </footer>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+	
+	<!-- ScrollSpy -->
+	<script src="../js/scrollSpy.js"></script>
+	
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

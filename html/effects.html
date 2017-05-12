@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="jQuery paper for a course at FMI - WWW technologies 2016/2017">
+    <meta name="author" content="anon">
+
+    <title>jQuery</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Favicon from jQuery official website [www.jquery.com] -->
+	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+	
+    <!-- Custom CSS -->
+    <link href="../css/content.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-target="#myScrollSpy" data-offset="15">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../referat.html">jQuery</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="basics.html">Основи</a>
+                    </li>
+                    <li>
+                        <a href="trav&man.html">Преминаване и управление</a>
+                    </li>
+                    <li>
+                        <a href="events.html">Събития, делегиране на събития</a>
+                    </li>
+					<li>
+                        <a href="effects.html" id="current">Ефекти</a>
+                    </li>
+					<li>
+                        <a href="ajax.html">AJAX</a>
+                    </li>
+					<li>
+                        <a href="resources.html">Използвана литература</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+		
+			<nav class="col-md-3" id="myScrollSpy">
+				<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="2000">
+					<li><a href="#built-in-fx" class="list-group-item">Вградени ефекти</a></li>
+					<li><a href="#custom-fx" class="list-group-item">Персонализирани ефкети</a></li>
+					<li><a href="#animations" class="list-group-item">Управление на анимации</a></li>
+				</ul>				
+            </nav>
+			
+            <div class="col-md-9">
+			
+				<div class="thumbnail">
+					<p style="margin-top: 2px">
+						jQuery прави тривиално добавянето на прости ефекти към страница. Ефектите могат да ползват вградените настройки или да осигурят
+						персонализирана продължителност. Също така могат да се създават персонализирани анимации с прозволни CSS свойства.
+					</p>
+					<div id="built-in-fx">
+						<h3>Вградени ефекти</h3>
+						<p>
+							Често използваните ефекти са вградени в библиотеката jQuery като методи, които могат да бъдат извикани от всеки jQuery обект.</br></br>
+						</p>
+						<ul>
+							<li><code>.show()</code> показва избраните елементи.</li>
+							<li><code>.hide()</code> скрива избраните елементи.</li>
+							<li><code>.fadeIn()</code> анимира прозрачността на избраните елемнти до 100%.</li>
+							<li><code>.fadeOut()</code> анимира прозрачността на избраните елемнти до 0%.</li>
+							<li><code>.slideDown()</code> визуализира избраните елементи с вертикално плъзгане.</li>
+							<li><code>.slideUp()</code> скрива избраните елементи с вертикално плъзгане.</li>
+							<li><code>.slideToggle()</code> скрива или показва избраните елементи с вертикално плъзгане в зависимост от текущото им състояние.</li>
+						</ul>
+						<p>
+							Лесно се добавя ефекет към селекция, веднъж когато тя е направена.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'.hidden'</span> ).show();</pre>
+						</code>
+						<h1>Програмен код 4.1. Ефект чрез show()</h1>
+						<p>
+							Може да се определи продължителността на ефектите. Има два начина да се направи това: да се определи времето в милисекунди:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'.hidden'</span> ).show( 300 );</pre>
+						</code>
+						<h1>Програмен код 4.2. Ефект чрез show() 2</h1>
+						<p>
+							... или да се използва една от предварително зададените вградени скорости:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'.hidden'</span> ).show( <span class="string">'slow'</span> );</pre>
+						</code>
+						<h1>Програмен код 4.3. Ефект чрез .show() 3</h1>
+						<p>
+							Тези скорости са специфицирани в обекта <code>jQuery.fx.speeds</code>; той може да се модифицира като се пренапишат стойностите по подразбиране или да се разширят с нови имена:
+						</p>
+						<code>
+							<pre>
+ 1 | <span class="comment">// пренастройване на предварително зададена скорост</span>
+ 2 | jQuery.fx.speeds.fast = 50;
+ 3 | 
+ 4 | <span class="comment">// създаване на нова скорост</span>
+ 5 | jQuery.fx.speeds.turtle = 3000;
+ 6 | 
+ 7 | <span class="comment">// тъй като пренаписахме тази скорост анимацията ще продължи</span>
+ 8 | <span class="comment">// в рамките на 50 милисекунди</span>
+ 9 | $( <span class="string">'.hidden'</span> ).hide( <span class="string">'fast'</span> );
+10 | 
+11 | <span class="comment">// след като са създадени новите скорости, те могат да се използват</span>
+12 | <span class="comment">// точно, както вградените</span>
+13 | $( <span class="string">'.other-hidden'</span> ).show( <span class="string">'turtle'</span> );</pre>
+						</code>
+						<h1>Програмен код 4.4. Предефиниране на скорости</h1>
+						<p>
+							Често се случва да трябва да се направи нещо след като е приключила анимацията - ако се направи преди тя да е приключила, това може да афектира
+							върху качеството на анимацията или да премахне елемнти от нея. Може да се добави callback функция за дефиниране на действие след края на анимацията.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'p.old'</span> ).fadeOut( 300, <span class="keyword">function</span>() {
+2 |  	$( this ).remove();
+3 | });</pre>
+						</code>
+						<h1>Програмен код 4.5. Ефект чрез .fadeOut()</h1>
+					</div>
+					
+					<div id="custom-fx">
+						<h3>Персонализирани ефкети чрез метода .animate()</h3>
+						<p>
+							Ако вградените анимации не удовлетворяват дадени изисквания, може да се ползва метода <code>.aniamte()</code> за създаване на персонализирани анимации с много CSS свойства.</br></br>
+							Методът <code>.aniamte()</code> взима до три аргумента:
+						</p>
+						<ul>
+							<li>обект, дефиниращ свойствата, които се анимират</li>
+							<li>продължителността на анимацията в милисекунди</li>
+							<li>callback функция, която ще се извика, когато приключи анимацията</li>
+						</ul>
+						<p>
+							Методът <code>.aniamte()</code> може да анимира до определена финална стойност или да увеличава съществуваща такава.
+						</p>
+						<code>
+							<pre>
+ 1 | $( <span class="string">'.funtimes'</span> ).animate({
+ 2 | 	    left: <span class="string">'+=50'</span>, <span class="comment">// увеличи с 50</span>
+ 3 |       opacity: 0.25,
+ 4 |       fontSize: <span class="string">'12px'</span>
+ 5 |    },
+ 6 |    300,
+ 7 |    <span class="keyword">function</span>() {
+ 8 |       <span class="comment">// изпълнява се, след като е приключила анимацията</span>
+ 9 |    }
+10 | );</pre>
+						</code>
+						<h1>Програмен код 4.6. Персонализиран ефект чрез метода .animate()</h1>
+					</div>
+					
+					<div id="animations">
+						<h3>Управление на анимации</h3>
+						<p>
+							jQuery има следните два важни метода за управление на анимации:
+						</p>
+						<ul>
+							<li><code>.stop()</code> ще спре текущите вървящи анимации на избраните елеменети.</li>
+							<li><code>.delay()</code> ще направи пауза преди стартирането на следващата анимация. Подава се като аргумент число, което определя времето на паузата в милисекунди.</li>
+						</ul>
+						<p>
+							Също така, jQuery осигурава методи за управление на опашка от ефекти, за създаване на персонализирана опашка от ефекти и за добавяне на пресонализирани
+							фунцкии към тези опашки.
+						</p>
+					</div>
+				</div>
+
+				<!-- Pager -->
+				<ul class="pager">
+					<li><a href="events.html"><- Назад</a></li>
+					<li><a href="ajax.html">Напред -></a></li>
+				</ul>
+				<!-- /.pager -->
+				
+			</div>
+
+		</div>
+		
+	</div>
+    <!-- /.container -->
+
+    <div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <p>Copyright &copy; 2017</p>
+        </footer>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+
+	<!-- ScrollSpy -->
+    <script src="../js/scrollSpy.js"></script>	
+	
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

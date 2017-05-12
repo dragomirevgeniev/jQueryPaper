@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="jQuery paper for a course at FMI - WWW technologies 2016/2017">
+    <meta name="author" content="anon">
+
+    <title>jQuery</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Favicon from jQuery official website [www.jquery.com] -->
+	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+	
+    <!-- Custom CSS -->
+    <link href="../css/content.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-target="#myScrollSpy" data-offset="15">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../referat.html">jQuery</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="basics.html" >Основи</a>
+                    </li>
+                    <li>
+                        <a href="trav&man.html">Преминаване и управление</a>
+                    </li>
+                    <li>
+                        <a href="events.html">Събития, делегиране на събития</a>
+                    </li>
+					<li>
+                        <a href="effects.html">Ефекти</a>
+                    </li>
+					<li>
+                        <a href="ajax.html" id="current">AJAX</a>
+                    </li>
+					<li>
+                        <a href="resources.html">Използвана литература</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+		
+			<nav class="col-md-3" id="myScrollSpy">
+				<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="5000">
+					<li><a href="#ajax" class="list-group-item">Методът $.ajax</a></li>
+					<li><a href="#conv-methods" class="list-group-item">Удобни методи</a></li>
+					<li><a href="#forms" class="list-group-item">Изпращане на данни и работа с форми</a></li>
+					<li><a href="#jqxhr" class="list-group-item">jqXHR</a></li>
+					<li><a href="#jsonp" class="list-group-item">JSONP</a></li>
+				</ul>				
+            </nav>
+			
+            <div class="col-md-9">
+			
+				<div class="thumbnail">
+					<p style="margin-top: 2px">
+						AJAX - "asynchronous JavaScript and XML" (асинхронен JavaScript и XML) - изпозлва се за вземане на данни от сървъра без нужда от презареждане на страницата.
+						Използва вградената функционалност в браузърите XMLHttpRequest (XHR), за да направи заявка до сървъра и след това да обработи данните, които е върнал той.</br></br>
+						jQuery предлага метода <code>$.ajax()</code> и други удобни методи, за да направят работата с XHR по-лесна.
+					</p>
+					<div id="ajax">
+						<h3>Методът $.ajax</h3>
+						<p>
+							Методът <code>$.ajax()</code> може да се ползва по няколко начина: може да се подаде на конфигурационен обект като негов аргумент или може да му се подаде
+							URL и опционален конфигурационен обект. Разглеждаме следния пример:
+						</p>
+						<code>
+							<pre>
+ 1 | <span class="comment">// Създаване на "callback" функции, които ще бъдат извикани, когато...</span>
+ 2 | 
+ 3 | <span class="comment">// ... AJAX заявката е успешна</span>
+ 4 | <span class="keyword">var</span> updatePage = <span class="keyword">function</span>( resp ) {
+ 5 | 		$( <span class="string">'#target'</span>).html( resp.people[0].name );
+ 6 | };
+ 7 | 
+ 8 | <span class="comment">// ... AJAX заявката не се изпълнява правилно</span>
+ 9 | <span class="keyword">var</span> printError = <span class="keyword">function</span>( req, status, err ) {
+10 |   	console.log( <span class="string">'something went wrong'</span>, status, err );
+11 | };
+12 | 
+13 | <span class="comment">// Създаване на обект, който описва AJAX заявката</span>
+14 | <span class="keyword">var</span> ajaxOptions = {
+15 |  	url: <span class="string">'/data/people.json'</span>,
+16 |   	dataType: <span class="string">'json'</span>,
+17 |  	success: updatePage,
+18 |   	error: printError
+19 | };
+20 | 
+21 | <span class="comment">// Започване на заявка</span>
+22 | $.ajax(ajaxOptions);</pre>
+						</code>
+						<h1>Програмен код 5.1. ajax заявка с конфигурационен обект, подаден на метода .ajax() </h1>
+						<p>
+							Разбира се, има по-лесен начин за писане на горния код като се подаде обект литерал на метода <code>$.ajax()</code>
+							и се изпозлват анонимни функции за callback при успех и при грешка. По-този начин се улеснява разработчика и кодът е по-лесен за обработка:
+						</p>
+						<code>
+							<pre>
+ 1 | $.ajax({
+ 2 | 	url: <span class="string">'/data/people.json'</span>,
+ 3 |  	dataType: <span class="string">'json'</span>,
+ 4 |  	success: <span class="keyword">function</span>( resp ) {
+ 5 |		$( <span class="string">'#target'</span>).html( resp.people[0].name );
+ 6 |  	},
+ 7 | 	error: <span class="keyword">function</span>( req, status, err ) {
+ 8 |		console.log( <span class="string">'something went wrong'</span>, status, err );
+ 9 |  	}
+10 | });</pre>
+						</code>
+						<h1>Програмен код 5.2. ajax заявка с конфигурационен обект, подаден на метода .ajax() - рефакторинг</h1>
+						<p>
+							Също така, може да се извика методът <code>$.ajax()</code> като се подаде URL и опционален конфигурационен обект. Това може да е полезно, ако се изисква използването на
+							конфигурацията по подразбиране на <code>$.ajax()</code> или, ако се изисква да се ползва същата конфигурация за няколко URL-a.
+						</p>
+						<code>
+							<pre>
+ 1 | $.ajax( <span class="string">'/data/people.json'</span>, {
+ 2 | 	type: <span class="string">'GET'</span>,
+ 3 |	dataType: <span class="string">'json'</span>,
+ 4 |  	success: <span class="keyword">function</span>( resp ) {
+ 5 |     	console.log( resp.people );
+ 6 |	},
+ 7 |  	еrror: <span class="keyword">function</span>( req, status, err ) {
+ 8 |		console.log( <span class="string">'something went wrong'</span>, status, err );
+ 9 |  	}
+10 | });</pre>
+						</code>
+						<h1>Програмен код 5.3. ajax заявка с URL и опционален конфигурационен обект, подаден на метода .ajax()</h1>
+						<p>
+							В тази версия, само URL-а е задължителен, но конфигурационният обект позволява да се каже на jQuery какви данни се иска да бъдат изпратени,
+							кой HTTP метод да се използва (GET, POST и т.н.), какъв вид информация се очаква да бъде върната, как да се реагира, когато заявката е успешна или не е, и т.н.
+						</p>
+					</div>
+					
+					<div id="conv-methods">
+						<h3>Удобни методи</h3>
+						<p>
+							Ако се прави проста заявка и не се изисква обработване на грешки, jQuery предлага няколко "удобни" метода, които предлагат по-кратък синтаксис.
+							Всеки от тези методи приема URL адрес, незадължителен обект за данни и незадължителен callback за обработка на успешна заявка.
+						</p>
+						<code>
+							<pre>
+1 | $.get( <span class="string">'/data/people.html'</span>, <span class="keyword">function</span>( html ){
+2 |   	$( <span class="string">'#target'</span> ).html( html );
+3 | });
+4 | 
+5 | $.post( <span class="string">'/data/save'</span>, { name: <span class="string">'Rebecca'</span> }, <span class="keyword">function</span>( resp ) {
+6 |  	console.log( resp );
+7 | });</pre>
+						</code>
+						<h1>Програмен код 5.4. Удобни методи</h1>
+					</div>
+					<div id="forms">
+						<h3>Изпращане на данни и работа с форми</h3>
+						<p>
+							Може да се изпратят данни с заявката като се сетне свойството <code>data</code> на конфирурационния обект или като се подаде обект като втори аргумент на някой от удобните методи.</br></br>
+							За GET заявка, данните ще бъдат залепени до URL като query низ; За POST заявка ще са данни от форма. jQuery предоставя полезния метод <code>.serialize()</code> за вземане на входните данни от форма
+							и конвертирането им до формат query string (<code>field1name=field1value&field2name=field2value...</code>):
+						</p>
+						<code>
+							<pre>
+ 1 | $( <span class="string">'form'</span> ).submit(<span class="keyword">function</span>( event ) {
+ 2 | 	event.preventDefault();
+ 3 | 
+ 4 | 	<span class="keyword">var</span> form = $( this );
+ 5 | 
+ 6 | 	$.ajax({
+ 7 |		type: <span class="string">'POST'</span>,
+ 8 |    	url: <span class="string">'/data/save'</span>,
+ 9 |     	data: form.serialize(),
+10 |     	dataType: <span class="string">'json'</span>,
+11 |     	success: <span class="keyword">function</span>( resp ) {
+12 |       		console.log( resp );
+13 |    	}
+14 | 	});
+15 | });</pre>
+						</code>
+						<h1>Програмен код 5.5. Работа с форми, POST заявка</h1>
+					</div>
+					
+					<div id="jqxhr">
+						<h3>jqXHR</h3>
+						<p>
+							<code>$.ajax()</code> (и други удобни методи) връща jqXHR обект - jQuery XML HTTP Request - обект, който има много полезни методи в него.
+							Може да се направи заявка чрез <code>$.ajax()</code> и след това да се запази върнатия обект в променлива.
+						</p>
+						<code>
+							<pre>
+1 | <span class="keyword">var</span> req = $.ajax({
+2 |   	url: <span class="string">'/data/people.json'</span>,
+3 |   	dataType: <span class="string">'json'</span>
+4 | });</pre>
+						</code>
+						<h1>Програмен код 5.6. Записване на jqXHR обект в променлива</h1>
+						<p>
+							Може да се използва този обект за прикачване на callback към заявката, дори когато заявката е приключила. Например, може да се използва метода <code>.then()</code>
+							на jqXHR обекта, за да се закачи callback и при успех и при грешка. Този метод приема една или две функции като негови параметри. Първата ще бъде извикана, ако заявката е успешна,
+							а втората - ако заявката се провали.
+						</p>
+						<code>
+							<pre>
+ 1 | <span class="keyword">var</span> success = <span class="keyword">function</span>( resp ) {
+ 2 | 	 $( <span class="string">'#target'</span> ).append(
+ 3 | 		<span class="string">'&ltp>people: '</span> + resp.people.length + <span class="string">'&lt/p>'</span>
+ 4 | 	 );
+ 5 | 	 console.log( resp.people );
+ 6 | };
+ 7 | 
+ 8 | <span class="keyword">var</span> err = <span class="keyword">function</span>( req, status, err ) {
+ 9 | 	 $( <span class="string">'#target'</span> ).append( <span class="string">'&ltp>something went wrong&lt/p>'</span> );
+10 | };
+11 | 
+12 | req.then( success, err );
+13 | req.then(<span class="keyword">function</span>() {
+14 | 	 $( <span class="string">'#target'</span> ).append( <span class="string">'&ltp>it worked&lt/p>'</span> );
+15 | });</pre>
+						</code>
+						<h1>Програмен код 5.7. Използване на метода .then()</h1>
+						<p>
+							След това може да се извика метода <code>.then()</code> на някоя заявка, колкото пъти е необходимо; като FIFO опашка.</br></br>
+							Ако не се иска да се закача callback за успех и callback за провал по едно и съшо време, могат да се позлвате методите <code>.done()</code> и <code>.fail()</code> на обекта.
+						</p>
+						<code>
+							<pre>
+1 | req.done( success );
+2 | req.fail( err );</pre>
+						</code>
+						<h1>Програмен код 5.8. Използване на .done() и .fail()</h1>
+						<p>
+							Ако се иска callback, който се изпълнява, и при успех, и при провал на заявката може да се използва метода <code>.always()</code>
+						</p>
+						<code>
+							<pre>
+1 | req.always(<span class="keyword">function</span>() {
+2 |   	$( <span class="string">'#target'</span> )
+3 |     	.append( <span class="string">'&ltp>one way or another, it is done now&lt/p>'</span> );
+4 | });</pre>
+						</code>
+						<h1>Програмен код 5.9. Използване на метода .always()</h1>
+					</div>
+					<div id="jsonp">
+						<h3>JSONP</h3>
+						<p>
+							Много JavaScript разработчици се алармират, когато за първи път се опитват да използват <code>$.ajax</code> за извличане на данни от друг домейн и тяхната заявка се провали.
+							Например, може някой да се опита да изтегли данни от "third-party" интерфейс и да открие, че заявката непрекъснато се проваля.</br></br>
+							Както се оказва, от съображения за сигурност, XHR заявките към други домейни са блокирани от браузъра. Някои приложения предлагат отговор, форматиран като JSONP - "JSON with Padding", който
+							позволява да се използват техните данни, въпреки че са хостнати на друг сървър.</br></br>
+							JSONP не е точно AJAX - вместо да използва XHR от браузъра, той работи като вкарва скриптов таг в страницата, която съдържа заявените данни, "padded" ("подплатен") с обвиваща фунцкия (wrapper).
+							Независимо от това, jQuery позволява да се направи JSONP заявка с метода <code>$.ajax()</code> като се зададе <code>'jsonp'</code> като <code>dataType</code> в конфигурационния обект.
+						</p>
+						<code>
+							<pre>
+1 | $.ajax({
+2 |   	url: <span class="string">'/data/search.jsonp'</span>,
+3 |   	data: { q: <span class="string">'a'</span> },
+4 |   	dataType: <span class="string">'jsonp'</span>,
+5 |   	success: <span class="keyword">function</span>( resp ) {
+6 |     	$( <span class="string">'#target'</span> ).html( <span class="string">'Results: '</span> + resp.results.length );
+7 |   	}
+8 | });</pre>
+						</code>
+						<h1>Програмен код 5.10. JSONP заявка</h1>
+						<p>
+							Също така може да се използва метода <code>$.getJSON()</code>, за да се направи JSONP заявка. Ако URL-a включва <code>callback=?</code>
+							или подобно нещо, jQuery ще я третира като JSONP заявка.
+						</p>
+						<code>
+							<pre>
+1 | $.getJSON( <span class="string">'/data/search.jsonp?q=a&callback=?'</span>,
+2 |   	<span class="keyword">function</span>( resp ) {
+3 |     	$( <span class="string">'#target'</span> ).html( <span class="string">'Results: '</span> + resp.results.length );
+4 |   	}
+5 | );</pre>
+						</code>
+						<h1>Програмен код 5.11. Използване на метода $.getJSON()</h1>
+					</div>
+					
+				</div>
+				<!-- Pager -->
+				<ul class="pager">
+					<li><a href="effects.html"><- Назад</a></li>
+					<li><a href="resources.html">Напред -></a></li>
+				</ul>
+				<!-- /.pager -->
+				
+			</div>
+
+		</div>
+		
+	</div>
+    <!-- /.container -->
+
+    <div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <p>Copyright &copy; 2017</p>
+        </footer>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+	
+	<!-- ScrollSpy -->
+    <script src="../js/scrollSpy.js"></script>	
+	
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="jQuery paper for a course at FMI - WWW technologies 2016/2017">
+    <meta name="author" content="anon">
+
+    <title>jQuery</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Favicon from jQuery official website [www.jquery.com] -->
+	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+	
+    <!-- Custom CSS -->
+    <link href="../css/content.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-target="#myScrollSpy" data-offset="15">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../referat.html">jQuery</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="basics.html">Основи</a>
+                    </li>
+                    <li>
+                        <a href="trav&man.html">Преминаване и управление</a>
+                    </li>
+                    <li>
+                        <a href="events.html" id="current">Събития, делегиране на събития</a>
+                    </li>
+					<li>
+                        <a href="effects.html">Ефекти</a>
+                    </li>
+					<li>
+                        <a href="ajax.html">AJAX</a>
+                    </li>
+					<li>
+                        <a href="resources.html">Използвана литература</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+		
+			<nav class="col-md-3" id="myScrollSpy">
+				<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="5000">
+					<li><a href="#shorthand-methods" class="list-group-item">Подръчни методи</a></li>
+					<li><a href="#ns-events" class="list-group-item">Пакетирани събития</a></li>
+					<li><a href="#binding" class="list-group-item">Закачане на няколко събития наведнъж</a></li>
+					<li><a href="#event" class="list-group-item">Обектът event</a></li>
+					<li><a href="#handler" class="list-group-item">Манипулатор на събитие</a></li>
+					<li><a href="#bubbling" class="list-group-item">Изплуване на събитие</a></li>
+					<li><a href="#delegation" class="list-group-item">Делегиране на събитие</a></li>
+				</ul>				
+            </nav>
+			
+            <div class="col-md-9">
+			
+				<div class="thumbnail">
+					<p style="margin-top: 2px">
+						jQuery улеснява реакцията за отговор след взаимодействие на потребителя с уеб страницата. Това означава, че може да се пише код, който се изпълнява, когато
+						потребител кликне на дадена част от страницата или, когато премести курсора на мишката си върху някой елемент. Например, този код чака потребител да кликне на
+						някой <code>li</code> елемент в страницата:
+					</p>
+					<code>
+						<pre>
+1 | $( <span class="string">'li'</span> ).click(<span class="keyword">function</span>( event ) {
+2 |   	console.log( <span class="string">'clicked'</span>, $( this ).text() );
+3 | });</pre>
+					</code>
+					<h1>Програмен код 3.1. Пример за използване на метода .click()</h1>
+					
+					<div id="shorthand-methods">
+						<h3>Подръчни методи</h3>
+						<p>
+							Горният код селектира всички списъчни елементи и след това ги свързва към манипулатор на събитието click на всеки <code>li</code> елемент, използвайки метода <code>.click()</code> от jQuery.</br></br>
+							Методи като <code>.click()</code> и други са "подръчни" за обвързване на събития. jQuery осигурява голям брой такива методи, всеки един от които отговоря на събитие на ДОМ.
+						</p>
+						<table class="funcTable">
+							<thead>
+								<tr>
+									<th>Име на събитието</th>
+									<th>Подръчен метод</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr><td>click</td><td><code>.click()</code></td></tr>
+								<tr><td>keydown</td><td><code>.keydown()</code></td></tr>
+								<tr><td>keypress</td><td><code>.keypress()</code></td></tr>
+								<tr><td>keyup</td><td><code>.keyup()</code></td></tr>
+								<tr><td>mouseover</td><td><code>.mouseover()</code></td></tr>
+								<tr><td>mouseout</td><td><code>.mouseout()</code></td></tr>
+								<tr><td>mouseenter</td><td><code>.mouseenter()</code></td></tr>
+								<tr><td>mouseleave</td><td><code>.mouseleave()</code></td></tr>
+								<tr><td>scroll</td><td><code>.scroll()</code></td></tr>
+								<tr><td>focus</td><td><code>.focus()</code></td></tr>
+								<tr><td>blur</td><td><code>.blur()</code></td></tr>
+								<tr><td>resize</td><td><code>.resize()</code></td></tr>
+							</tbody>
+						</table>
+						<h1>Таблица 1. Подръчни методи за обработка на събития</h1>
+						<p>
+							В реализацията си всички "подръчни" методи използват метода <code>.on()</code> от jQuery. Този метод може да се използва и самостоятелно в даден код; всъщност, това позволява много повече гъвкавост.
+							Когато се използва <code>.on()</code>, се подава името на дадено събитие като първи аргумент и след това функцията, която го управлява (манипулатор) като втори аргумент:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).on( <span class="string">'click'</span>, <span class="keyword">function</span>( event ) {
+2 | 	console.log( <span class="string">'clicked'</span>, $( this ).text() );
+3 | });</pre>
+						</code>
+						<h1>Програмен код 3.2. Пример за използване на метода .on()</h1>
+						<p>
+							Веднъж, когато към даден елемент е обвързан с някой манипулатор на събитие, handler-ът може да се задейства и чрез jQuery.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).trigger( <span class="string">'click'</span> );</pre>
+						</code>
+						<h1>Програмен код 3.3. Пример за използване на метода .trigger()</h1>
+						<p>
+							Ако събитието, което трябва да се задейства има "подръчен" метод (от таблицата по-горе), може да се задейства събитието лесно като той се извика:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).click();</pre>
+						</code>
+						<h1>Програмен код 3.4. Пример за използване на подръчен метод</h1>
+						<p>
+							Веднъж, когато е закачено събитие, то може да бъде откачено чрез метода <code>.off()</code>. Така ще се премахне всеки манипулатор на събитие, свързан с него.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'li'</span> ).off( <span class="string">'click'</span> );</pre>
+						</code>
+						<h1>Програмен код 3.5. Пример за използване на метода .off()</h1>
+						
+					</div>	
+						
+					<div id="ns-events">
+						<h3>Пакетирани събития</h3>
+						<p>
+							Едно от предимствата на метода <code>.on()</code> е, че позволява работа с "пакетирани" събития (групирани по име - namaspace). А кога се използва тази фунцкионалност?
+							- Използват се в ситуации, в които се иска да се закачат няколко събития и след това да се откачат някои от манипулаторите. Това може да стане по следния начин:
+						</p>
+						<code>
+							<pre>
+ 1 | $( <span class="string">'li'</span> ).on( <span class="string">'click.logging'</span>, <span class="keyword">function</span>() {
+ 2 | 	console.log( <span class="string">'a list item was clicked'</span> );
+ 3 | });
+ 4 | 
+ 5 | $( <span class="string">'li'</span> ).on( <span class="string">'click.analytics'</span>, <span class="keyword">function</span>() {
+ 6 | 	registerClick();
+ 7 | 	doSomethingElse();
+ 8 | });
+ 9 | 
+10 | $( <span class="string">'li'</span> ).off( <span class="string">'click.logging'</span> );</pre>
+						</code>
+						<h1>Програмен код 3.6. Свързване на събития върху списъкови елементи</h1>
+						<p>
+							В горния пример ще бъдат откачени всички <code>li</code> елементи, но понякога не се иска точно това. Ако се върже манипулатор на събитие с пакетирано такова, може да се насочим конкретно към него: 
+						</p>
+						<code>
+							<pre>
+ 1 | $( <span class="string">'li'</span> ).on( <span class="string">'click.logging'</span>, <span class="keyword">function</span>() {
+ 2 | 	console.log( <span class="string">'a list item was clicked'</span> );
+ 3 | });
+ 4 | 
+ 5 | $( <span class="string">'li'</span> ).on( <span class="string">'click.analytics'</span>, <span class="keyword">function</span>() {
+ 6 | 	registerClick();
+ 7 | 	doSomethingElse();
+ 8 | });
+ 9 | 
+10 | $( <span class="string">'li'</span> ).off( <span class="string">'click.logging'</span> );</pre>
+						</code>
+						<h1>Програмен код 3.7. Пакетирани събития</h1>
+					</div>
+					<p>
+						Този код оставя кликването, свързано с аналитиката, недокоснато като същевременно откача кликването, свързано със логването.</br>
+						Можее също да се изпозлват пространства от имена, за да се задействат само определени събития.
+					</p>
+					
+					<div id="binding">
+						<h3>Закачане на няколко събития наведнъж</h3>
+						<p>
+							Друго предимство на <code>.on()</code> е, че позволява закачане на няколко събития наведнъж. Например, може да се изпълни един и съш код, когато потребител
+							скролва прозореца или го преоразмерява. Чрез <code>.on()</code> могат да се подават като аргументи двете събития като стринг с празно място между тях, следвани от функцията, която ще обработи двете събития:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'input[type="text"]'</span> ).on(<span class="string">'focus blur'</span>, <span class="keyword">function</span>() {
+2 | 	console.log( <span class="string">'The user focused or blurred the input'</span> );
+3 | });
+4 | 
+5 | $( window ).on( <span class="string">'resize.foo scroll.bar'</span>, <span class="keyword">function</span>() {
+6 | 	console.log( <span class="string">'The window has been resized or scrolled!'</span> );
+7 | });</pre>
+						</code>
+						<h1>Програмен код 3.8. Свързване на няколко събития наведнъж</h1>						
+					</div>
+					
+					<div id="event">
+						<h3>Обектът event</h3>
+						<p>
+							При всяко задействане на събитие, функцията за обработка на събития получава един аргумент, обект на събитие, който е нормализиран в различните браузъри. 
+							Този обект има много полезни свойства, включително следните:
+						</p>
+						<code>
+							<pre>
+1 | $( document ).on( <span class="string">'click'</span>, <span class="keyword">function</span>( event ) {
+2 | 	console.log( event.type );<span class="comment">      // Тип събитие; например, "click"</span>
+3 | 	console.log( event.which );<span class="comment">   // Натиснатият бутон.</span>
+4 | 	console.log( event.target );<span class="comment">    // Елементът.</span>
+5 |  	console.log( event.pageX );<span class="comment">   // X координата на мишката в документа.</span>
+6 | 	console.log( event.pageY );<span class="comment">   // Y координата на мишката в документа.</span>
+7 | });</pre>
+						</code>
+						<h1>Програмен код 3.9. Работа с обектът event</h1>							
+					</div>
+					
+					<div id="handler">
+						<h3>Манипулатор на събитие</h3>
+						<p>
+							Когато се зададе функция, която да бъде използвана като манипулатор на събития, тази функция получава достъп до същинския елемент от DOM, който инициира събитието като <code>this</code>.
+							Ако изисква използване на jQuery за манипулиране на елемента, ще трябва да се подаде на <code>$()</code>:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'input'</span> ).on( <span class="string">'keydown'</span>, <span class="keyword">function</span>( event ) {
+2 | 	<span class="comment">// this: Елементът, с който е свързан манипулатора на събитието</span>
+3 | 	<span class="comment">// event: Обектът на събитието.</span>
+4 | 
+5 | 	<span class="comment">// Сменя фоновия цвят на елемента на червен, ако е </span>
+6 | 	<span class="comment">// натиснат 'backspace', зелен - в противен случай</span>
+7 | 	$( this ).css( <span class="string">'background'</span>, event.which === 8 ? <span class="string">'red'</span> : <span class="string">'green'</span> );
+8 | });</pre>
+						</code>
+						<h1>Програмен код 3.10. Работа с event handler</h1>							
+					</div>
+					
+					<div id="bubbling">
+						<h3>Изплуване на събитие</h3>
+						<code>
+							<pre>
+1 | $( <span class="string">'*'</span> ).add( [ document, window ] ).on( <span class="string">'click'</span>, <span class="keyword">function</span>( event ) {
+2 | 	event.preventDefault();
+3 | 	console.log( this );
+4 | });</pre>
+						</code>
+						<h1>Програмен код 3.11. Изплуване на събитие</h1>	
+						<p>
+							В горният пример се връзва манипyлатор на събитието click с всичките елементи в документа (нещо, което не се прави в реален код), както и с <code>document</code> и <code>window</code>. Какво се случва, когато се кликне върху анчор елемент,
+							който е вложен вътре в други елементи? Всъщност, събитето click ще се задейства върху елемента <code>a</code>, както и върху всички елементи, които го съдържат, включително <code>document</code> и <code>window</code>. </br>
+							Това поведение се нарича изплуване на събитие - събитието е задействано на елемента, върху който е кликнал потребителя, но се изкачва нагоре по DOM, освен ако не бъде спряно чрез метода <code>.stopPropagation()</code>. </br>
+							Да се разгледа следния markup:
+						</p>
+						<code>
+							<pre>
+1 | <span class="comment">&lta </span>href=<span class="string">"#foo"</span>><span class="comment">&ltspan></span>I am a Link!<span class="comment">&lt/span>&lt/a></span>
+2 | <span class="comment">&lta </span>href=<span class="string">"#bar"</span>><span class="comment">&ltb>&lti></span>I am another Link!<span class="comment">&lt/i>&lt/b>&lt/a></span></pre>
+						</code>
+						<h1>Програмен код 3.12. Markup</h1>	
+						<p>
+							Да се разгледа и следния програмен код:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'a'</span> ).on( <span class="string">'click'</span>, <span class="keyword">function</span>( event ) {
+2 | 	event.preventDefault();
+3 | 	console.log( $( this ).attr( <span class="string">'href'</span> ) );
+4 | });</pre>
+						</code>
+						<h1>Програмен код 3.13. Изплуване на събитие 2</h1>
+						<p>
+							Когато се кликне върхъ "I am a Link!", всъщност не се клика на <code>a</code>, а на <code>span</code> вътре в <code>a</code>.
+							Независимо от това, събитието за кликване се измества на <code>a</code> и се изтрелва събитието.
+						</p>	
+					</div>
+					
+					<div id="delegation">
+						<h3>Делегиране на събитие</h3>
+						<p>
+							"Балонното" поведение на събитията позволява да се прави "делегиране на събития" - обвързване на манипулатори с елементи от високо ниво и след това да открие кой елемент от ниско ниво е инициирал събитието. 
+							Например, би моглo да se обвърже събитие с неорганизиран списък и след това да определи кой елемент инициира събитието:
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'#my-unordered-list'</span> ).on( <span class="string">'click'</span>, <span class="keyword">function</span>( event ) {
+2 | 	console.log( event.target ); <span class="comment">// логва елемента, който предизвиква събитието</span>
+3 | });</pre>
+						</code>
+						<h1>Програмен код 3.14. Делегиране на събитие</h1>
+						<p>
+							Разбира се, ако неподреденият ни списък съдържа елементи, които имат друг маркъп, но ни интересува, върху кой елемент е било кликнато, това може да ни обърка много бързо.
+							За щастие, jQuery ни осигурява помощник, който ни позволява да определим кои елементи ни интересуват като същевременно се свързва само с елемента от високо ниво.
+						</p>
+						<code>
+							<pre>
+1 | $( <span class="string">'#my-unordered-list'</span> ).on( <span class="string">'click'</span>, <span class="string">'li'</span>, <span class="keyword">function</span>( event ) {
+2 | 	console.log( this ); <span class="comment">// логва списъковия елемент, който е кликнат</span>
+3 | });
+4 | 
+5 | $( <span class="string">'&ltli>a new list item!&lt/li>'</span> ).appendTo( <span class="string">'#my-unordered-list'</span> );</pre>
+						</code>
+						<h1>Програмен код 3.15. Делегиране на събитие 2</h1>				
+					</div>
+					
+				</div>
+				
+				<!-- Pager -->
+				<ul class="pager">
+					<li><a href="trav&man.html"><- Назад</a></li>
+					<li><a href="effects.html">Напред -></a></li>
+				</ul>
+				<!-- /.pager -->
+				
+			</div>
+
+		</div>
+	
+	</div>
+    <!-- /.container -->
+
+    <div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <p>Copyright &copy; 2017</p>
+        </footer>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.js"></script>
+	
+	<!-- ScrollSpy -->
+    <script src="../js/scrollSpy.js"></script>
+	
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
